@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BabyMonitor.Core\BabyMonitor.Core.csproj" />
     <ProjectReference Include="..\BabyMonitor.Infrastructure\BabyMonitor.Infrastructure.csproj" />
   </ItemGroup>

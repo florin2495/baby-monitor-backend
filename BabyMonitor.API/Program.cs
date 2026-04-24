@@ -1,7 +1,44 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// ---------------------------------------------------------------------------
+// Services
+// ---------------------------------------------------------------------------
+
+// OpenAPI / Swagger for interactive API documentation
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Health checks (will be extended later with DB connectivity probe)
+builder.Services.AddHealthChecks();
+
+// CORS: permissive only in development so the Angular frontend can call us
+// from localhost:4200 (ng serve) and localhost:8080 (nginx container).
+const string DevCorsPolicy = "DevClient";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(DevCorsPolicy, policy =>
+        policy.WithOrigins(
+                "http://localhost:4200",
+                "http://localhost:8080")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
+// ---------------------------------------------------------------------------
+// Pipeline
+// ---------------------------------------------------------------------------
+
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseCors(DevCorsPolicy);
+}
+
+app.MapHealthChecks("/health");
 app.MapGet("/", () => "Luna API is running");
 
 app.Run();
