@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BabyMonitor.Core\BabyMonitor.Core.csproj" />
+    <ProjectReference Include="..\BabyMonitor.Infrastructure\BabyMonitor.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
