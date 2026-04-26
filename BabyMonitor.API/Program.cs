@@ -1,8 +1,23 @@
+using BabyMonitor.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ---------------------------------------------------------------------------
 // Services
 // ---------------------------------------------------------------------------
+
+// EF Core: PostgreSQL via Npgsql provider. Connection string is read from
+// configuration ("ConnectionStrings:LunaDb"); in production it is supplied
+// via the env var ConnectionStrings__LunaDb (set in docker-compose).
+var connectionString = builder.Configuration.GetConnectionString("LunaDb")
+    ?? throw new InvalidOperationException(
+        "Connection string 'LunaDb' is not configured. " +
+        "Set it in appsettings.Development.json (dev) or via the env var " +
+        "ConnectionStrings__LunaDb (prod / docker).");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 // OpenAPI / Swagger for interactive API documentation
 builder.Services.AddEndpointsApiExplorer();
