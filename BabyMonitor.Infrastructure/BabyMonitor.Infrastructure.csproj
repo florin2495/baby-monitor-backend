@@ -8,6 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+
+    <!--
+      Transitive pin: a 9.0.0 build of System.Security.Cryptography.Xml is dragged in
+      via EF Core tooling and triggers NU1903 (GHSA-37gx-xxp4-5rgx, GHSA-w3x6-4m5h-cxqf).
+      Pin to the .NET 10 patched version to override resolution.
+    -->
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BabyMonitor.Core\BabyMonitor.Core.csproj" />
   </ItemGroup>
 
