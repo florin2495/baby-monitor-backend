@@ -1,0 +1,41 @@
+# Build outputs
+**/bin
+**/obj
+**/out
+**/publish
+**/*.suo
+**/*.user
+
+# Git / VCS
+**/.git
+**/.gitignore
+**/.gitattributes
+
+# Editors / IDEs
+**/.vs
+**/.vscode
+**/.idea
+**/.history
+
+# Docker — never copy the Dockerfile itself or local compose overrides into
+# the build context.
+**/Dockerfile
+**/.dockerignore
+**/docker-compose*.yml
+**/docker-compose*.yaml
+
+# Tooling caches
+**/.tool-cache
+**/.local
+**/.config
+
+# OS junk
+**/.DS_Store
+**/Thumbs.db
+**/Desktop.ini
+
+# Misc
+**/*.log
+**/*.tmp
+**/*.bak
+**/README.md
