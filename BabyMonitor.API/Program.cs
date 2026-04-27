@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using BabyMonitor.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,12 @@ var connectionString = builder.Configuration.GetConnectionString("LunaDb")
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+// MVC Controllers with JSON enum-as-string serialization
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+        o.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter()));
 
 // OpenAPI / Swagger for interactive API documentation
 builder.Services.AddEndpointsApiExplorer();
@@ -53,6 +60,7 @@ if (app.Environment.IsDevelopment())
     app.UseCors(DevCorsPolicy);
 }
 
+app.MapControllers();
 app.MapHealthChecks("/health");
 app.MapGet("/", () => "Luna API is running");
 
