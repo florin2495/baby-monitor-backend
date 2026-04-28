@@ -53,12 +53,22 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Auto-migrate on startup (safe for single-instance self-hosted deployments).
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(DevCorsPolicy);
 }
+
+// CORS is always enabled so the nginx-proxied frontend and direct dev
+// requests both work without issues.
+app.UseCors(DevCorsPolicy);
 
 app.MapControllers();
 app.MapHealthChecks("/health");
